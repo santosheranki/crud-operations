@@ -29,8 +29,7 @@
     "heroku-postbuild": " npm install",
     "build": "npm run build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "postinstall": "ng build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
