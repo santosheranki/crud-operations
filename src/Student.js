@@ -9,6 +9,13 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { Box, TextField } from "@mui/material";
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Edit from "./edit.png";
+import Delete from "./deletes.png";
 
 const style = {
   position: "absolute",
@@ -17,8 +24,8 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: 400,
   bgcolor: "background.paper",
-  borderRadius:10,
-//   border: "2px solid #000",
+  borderRadius: 10,
+  //   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
 };
@@ -56,6 +63,25 @@ const columns = [
     width: 200,
     editable: true,
   },
+  {
+    field: "Edit/update",
+    headerName: "Edit/update",
+    renderCell: (params) => {
+      return (
+        <div>
+          <Button style={{ textAlign: "left", alignSelf: "left" }}>
+            <img src={Edit} alt="Edit" />
+          </Button>
+          <Button style={{ textAlign: "left", alignSelf: "left" }}>
+            <img src={Delete} alt="delete" />
+          </Button>
+        </div>
+      );
+    },
+    // type: "number",
+    width: 200,
+    // editable: true,
+  },
 ];
 
 let rows = [
@@ -75,6 +101,7 @@ export default function Student() {
   const navigate = useNavigate();
   const [rowsData, setRowsData] = useState();
   const [isopen, setIsOpen] = useState(false);
+  const [date, setDate] = useState();
   const myJWT = sessionStorage.getItem("jwt");
   console.log(myJWT, "myjwt in dashboard");
   if (myJWT === undefined || myJWT === null) {
@@ -112,6 +139,11 @@ export default function Student() {
     console.log("you clicked");
   };
 
+  const handleChangeDate = (e) => {
+    setDate(e.$d);
+    console.log(e.$d, "is the date you selecetd");
+  };
+
   return (
     <div style={{ width: "100%", height: "100%" }}>
       {/* {isopen ? ( */}
@@ -125,17 +157,45 @@ export default function Student() {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             ADD/Edit Student
           </Typography>
-          <div style={{display:'flex',flexDirection:'column'}}>
-            <p style={{fontFamily:'monsterrat',fontSize:17,}}>Name</p>
-            <TextField style={{width:'100%',height:50}} />
-            <p style={{fontFamily:'monsterrat',fontSize:17,}}>Email</p>
-            <TextField style={{width:'100%',height:50}}/>
-             <p style={{fontFamily:'monsterrat',fontSize:17,}}>Phone</p>
-            <TextField style={{width:'100%',height:50}}/>
-             <p style={{fontFamily:'monsterrat',fontSize:17,}}>Enroll Number</p>
-            <TextField style={{width:'100%',height:50}}/>
-            <p style={{fontFamily:'monsterrat',fontSize:17,}}>Date of admission</p>
-            <TextField style={{width:'100%',height:50}}/>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <p style={{ fontFamily: "monsterrat", fontSize: 17 }}>Name</p>
+            <TextField style={{ width: "100%", height: 50 }} />
+            <p style={{ fontFamily: "monsterrat", fontSize: 17 }}>Email</p>
+            <TextField style={{ width: "100%", height: 50 }} />
+            <p style={{ fontFamily: "monsterrat", fontSize: 17 }}>Phone</p>
+            <TextField style={{ width: "100%", height: 50 }} />
+            <p style={{ fontFamily: "monsterrat", fontSize: 17 }}>
+              Enroll Number
+            </p>
+            <TextField style={{ width: "100%", height: 50 }} />
+            <p style={{ fontFamily: "monsterrat", fontSize: 17 }}>
+              Date of admission
+            </p>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DesktopDatePicker
+                label="Date of admission"
+                inputFormat="MM/DD/YYYY"
+                value={date}
+                onChange={handleChangeDate}
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </LocalizationProvider>
+            <br></br>
+            <br></br>
+            <button
+              style={{
+                backgroundColor: "#FEAF00",
+                fontFamily: "monsterrat",
+                fontSize: 14,
+                borderRadius: 4,
+                width: "199",
+                height: 44,
+                borderColor: "white",
+                textDecorationColor: "white",
+              }}
+            >
+              Submit
+            </button>
           </div>
         </Box>
       </Modal>
