@@ -6,14 +6,13 @@ import Users from "./Users.png";
 import { useNavigate } from "react-router-dom";
 import CustomDrawer from "./Drawer";
 import Header from "./Header";
-
 export default function Dashboard() {
  const navigate = useNavigate();
   React.useEffect(() => {
-    const myJWT = sessionStorage.getItem("jwt");
+const myJWT = sessionStorage.getItem("jwt");
     console.log(myJWT, "myjwt in dashboard");
     if (myJWT === undefined || myJWT === null) {
-      sessionStorage.setItem("jwt", null);
+      sessionStorage.clear();
       navigate("/");
     }
   });

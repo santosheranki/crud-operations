@@ -16,14 +16,14 @@ const drawerWidth = "15%";
 export default function CustomDrawer() {
   // const theme = useTheme();
   const navigate = useNavigate();
-  React.useEffect(() => {
-    const myJWT = sessionStorage.getItem("jwt");
-    console.log(myJWT, "myjwt in dashboard");
-    if (myJWT === undefined || myJWT === null) {
-      sessionStorage.setItem("jwt",null);
-      navigate("/");
-    }
-  });
+  // React.useEffect(() => {
+  //   const myJWT = sessionStorage.getItem("jwt");
+  //   console.log(myJWT, "myjwt in dashboard");
+  //   if (myJWT === undefined || myJWT === null) {
+  //     sessionStorage.setItem("jwt",null);
+  //     navigate("/");
+  //   }
+  // });
   const isopen = true;
   const styles = {
     paper: {
