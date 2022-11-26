@@ -16,6 +16,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import Edit from "./edit.png";
 import Delete from "./deletes.png";
 import { useForm } from "react-hook-form";
+import { Phone } from "@mui/icons-material";
 const style = {
   position: "absolute",
   top: "50%",
@@ -332,7 +333,12 @@ export default function Student() {
             ADD Student
           </Typography>
           <div style={{ display: "flex", flexDirection: "column" }}>
+            <div style={{flexDirection :"row", display:"flex",}}> 
             <p style={{ fontFamily: "monsterrat", fontSize: 17 }}>Name</p>
+              <p style={{ fontFamily: "monsterrat", fontSize: 12,color:"red", paddingLeft:350,}}>Name must be unique</p>
+              {/* <p style={{ fontFamily: "monsterrat", fontSize: 17, flexDirection:"row" }}>Name</p> */}
+            </div>
+            {/* <p style={{ fontFamily: "monsterrat", fontSize: 12, paddingTop:14, textDecorationColor:"gray"}}>Name must be unique</p> */}
             <TextField
               onChange={handleName}
               value={name}
@@ -345,10 +351,23 @@ export default function Student() {
               style={{ width: "100%", height: 50 }}
             />
             <p style={{ fontFamily: "monsterrat", fontSize: 17 }}>Phone</p>
-            <input type="number" id="Phone" name="Phone" maxlength="10"></input>
             <TextField
               value={phone}
+              type="number"
+              onInput={(e) => {
+                e.target.value = Math.max(0, parseInt(e.target.value))
+                  .toString()
+                  .slice(0, 10);
+                
+              }}
               onChange={handlePhone}
+              // inputProps={{ maxLength: 10 }} 
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">+91</InputAdornment>
+                ),
+                // maxLength : 10,
+              }}
               style={{ width: "100%", height: 50 }}
             />
             <p style={{ fontFamily: "monsterrat", fontSize: 17 }}>
@@ -356,7 +375,14 @@ export default function Student() {
             </p>
             <TextField
               value={enroll}
+              type="number"
+              onInput={(e) => {
+                e.target.value = Math.max(0, parseInt(e.target.value))
+                  .toString()
+                  .slice(0, 999999);
+              }}
               onChange={handleEnroll}
+              
               style={{ width: "100%", height: 50 }}
             />
             <p style={{ fontFamily: "monsterrat", fontSize: 17 }}>
@@ -435,7 +461,14 @@ export default function Student() {
             </p>
             <TextField
               value={enroll}
+              type="number"
+              onInput={(e) => {
+                e.target.value = Math.max(0, parseInt(e.target.value))
+                  .toString()
+                  .slice(0, 999999);
+              }}
               onChange={handleEnroll}
+              
               style={{ width: "100%", height: 50 }}
             />
             <p style={{ fontFamily: "monsterrat", fontSize: 17 }}>
