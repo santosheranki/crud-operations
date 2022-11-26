@@ -8,12 +8,14 @@ import Header from "./Header";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import InputAdornment from '@mui/material/InputAdornment';
 import { Box, TextField } from "@mui/material";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import Edit from "./edit.png";
 import Delete from "./deletes.png";
+import { useForm } from "react-hook-form";
 const style = {
   position: "absolute",
   top: "50%",
@@ -47,7 +49,7 @@ export default function Student() {
   const [phone, setPhone] = useState();
   const [params, setParams] = useState();
   const [isopen, setIsOpen] = useState(false);
-
+  const { register } = useForm();
   const columns = [
     {
       field: "username",
@@ -184,8 +186,8 @@ export default function Student() {
         .then((response) => response.json())
         .then((result) => {
           console.log(result, "reultssssssssss");
-          if(result.id){
-            setIsEdit(!isEdit)
+          if (result.id) {
+            setIsEdit(!isEdit);
           }
         })
         .catch((error) => console.log("error", error));
@@ -297,6 +299,24 @@ export default function Student() {
     setName(e.target.value);
     // username = e.target.value;
   };
+  const handleValidation = (e) => {
+    let fields = this.state.fields;
+    let errors = {};
+    let formIsValid = true;
+
+    //Name
+    if (!fields["name"]) {
+      formIsValid = false;
+      errors["name"] = "Cannot be empty";
+    }
+
+    if (typeof fields["name"] !== "undefined") {
+      if (!fields["name"].match(/^[a-zA-Z]+$/)) {
+        formIsValid = false;
+        errors["name"] = "Only letters";
+      }
+    }
+  };
 
   return (
     <div style={{ width: "100%", height: "100%" }}>
@@ -325,6 +345,7 @@ export default function Student() {
               style={{ width: "100%", height: 50 }}
             />
             <p style={{ fontFamily: "monsterrat", fontSize: 17 }}>Phone</p>
+            <input type="number" id="Phone" name="Phone" maxlength="10"></input>
             <TextField
               value={phone}
               onChange={handlePhone}
@@ -395,7 +416,18 @@ export default function Student() {
             <p style={{ fontFamily: "monsterrat", fontSize: 17 }}>Phone</p>
             <TextField
               value={phone}
+              type="number"
+              onInput={(e) => {
+                e.target.value = Math.max(0, parseInt(e.target.value))
+                  .toString()
+                  .slice(0, 10);
+              }}
               onChange={handlePhone}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">+91</InputAdornment>
+                ),
+              }}
               style={{ width: "100%", height: 50 }}
             />
             <p style={{ fontFamily: "monsterrat", fontSize: 17 }}>
